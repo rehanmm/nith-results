@@ -1,3 +1,6 @@
+const DOMAIN = 'https://nithp.vercel.app/api/result'
+
+
 export const fetchData = async ({ branch, batch, setLoading, version }) => {
   let url;
   let next_cursor;
@@ -52,7 +55,7 @@ export const fetchData = async ({ branch, batch, setLoading, version }) => {
         do {
           console.log("fetching data from " + _next_cursor);
           res = await fetch(
-            `https://nithp.herokuapp.com/api/result/student?limit=3000&next_cursor=${_next_cursor}`
+            `${DOMAIN}/student?limit=3000&next_cursor=${_next_cursor}`
           );
           let jso = await res.json();
           _data = _data.concat(jso.data);
@@ -85,7 +88,7 @@ export const fetchData = async ({ branch, batch, setLoading, version }) => {
         do {
           console.log("fetching data from " + _next_cursor);
           res = await fetch(
-            `https://nithp.herokuapp.com/api/result/student?roll=${batch.slice(
+            `${DOMAIN}/student?roll=${batch.slice(
               2
             )}%&limit=3000&next_cursor=${_next_cursor}`
           );
@@ -111,7 +114,7 @@ export const fetchData = async ({ branch, batch, setLoading, version }) => {
         do {
           console.log("fetching data from " + _next_cursor);
           res = await fetch(
-            `https://nithp.herokuapp.com/api/result/student?branch=${branch}&roll=${batch.slice(
+            `${DOMAIN}/student?branch=${branch}&roll=${batch.slice(
               2
             )}%&limit=200&next_cursor=${_next_cursor}`
           );
@@ -145,7 +148,7 @@ export const fetchData = async ({ branch, batch, setLoading, version }) => {
 export const getResultByRollNumber = async (roll) => {
   try {
     let res = await fetch(
-      `https://nithp.herokuapp.com/api/result/student/${roll}`
+      `${DOMAIN}/student/${roll}`
     );
     if (res.ok) {
       return await res.json();
@@ -157,13 +160,13 @@ export const getResultByRollNumber = async (roll) => {
 };
 
 export const getBranches = async () => {
-  let res = await fetch("https://nithp.herokuapp.com/api/result/branches");
+  let res = await fetch(`${DOMAIN}/branches`);
   let data = await res.json();
   return data;
 };
 
 export const getVersion = async () => {
-  let res = await fetch("https://nithp.herokuapp.com/api/result/last_updated");
+  let res = await fetch(`${DOMAIN}/last_updated`);
   let data = await res.json();
   return data;
 };
